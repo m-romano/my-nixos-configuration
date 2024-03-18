@@ -12,7 +12,7 @@
   
   # Override root filesystem config and edit options.
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/f61a5ecb-34ec-41c9-9ac2-13235d9a9a62"; # Edit uuid. You can find it by running blki
+    { device = "/dev/disk/by-uuid/f61a5ecb-34ec-41c9-9ac2-13235d9a9a62"; # Edit uuid. You can find it by running blkid
       fsType = "ext4";
       options = [
          "noatime"
