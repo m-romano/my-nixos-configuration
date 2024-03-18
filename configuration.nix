@@ -12,7 +12,7 @@
   
   # Override root filesystem config and edit options.
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/51c37128-dfb3-4439-ad9d-31f1bebfa62f";
+    { device = "/dev/disk/by-uuid/82bac688-dcf6-491d-8c6d-5ccfefd5796e"; # Edit uuid, run blkid to find it.
       fsType = "ext4";
       options = [
          "noatime"
@@ -26,7 +26,7 @@
     "vm.dirty_background_ratio" = 5;
     "vm.vfs_cache_pressure" = 50;
     "kernel.core_pattern" = "/dev/null";
-    "mitigations" = "off";
+    "mitigations" = "off"; # Edit if you have above 8th/9th gen.
   };
 
   # Edit kernel and boot parameters.
@@ -42,7 +42,8 @@
   zramSwap.enable = true;
 
   # Install Intel drivers.
-  hardware.opengl.extraPackages = with pkgs; [
+  # https://nixos.org/manual/nixos/stable/#sec-x11
+  hardware.opengl.extraPackages = with pkgs; [ # Edit according your CPU
     intel-compute-runtime
     intel-media-driver
   ];
@@ -54,13 +55,13 @@
   services.xserver = {
     enable = true;
     videoDrivers = [ "modesetting" ];
-    xkb.layout = "it";
+    xkb.layout = "us";
     desktopManager.plasma5.enable = true;
     displayManager.sddm.enable = true;
   };
 
   # Exclude packages from Plasma5.
-  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
+  environment.plasma5.excludePackages = with pkgs.libsForQt5; [ # Edit according your preferences.
     pkgs.aha
     plasma-browser-integration
     oxygen
@@ -119,7 +120,7 @@
   services.irqbalance.enable = true;
 
   # Set your time zone.
-  time.timeZone = "Europe/Rome";
+  time.timeZone = "Europe/Amsterdam";
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -134,7 +135,7 @@
   };
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput = {
@@ -143,9 +144,9 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.zhenta = {
+  users.users.drinkwater = { # Edit user name.
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user and add user to ‘networkmanager‘.
   #   packages = with pkgs; [
   #     firefox
   #     tree
@@ -154,7 +155,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [ # Edit according your preferences.
     wget
     brave
     temurin-bin-21
@@ -188,7 +189,7 @@
   # Open ports in the firewall or disable the firewall altogether.
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 55252 ];
+    # allowedTCPPorts = [ ...  ];
     # allowedUDPPorts = [ ...  ];
   };
 
