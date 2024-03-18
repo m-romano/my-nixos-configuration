@@ -26,7 +26,7 @@
     "vm.dirty_background_ratio" = 5;
     "vm.vfs_cache_pressure" = 50;
     "kernel.core_pattern" = "/dev/null";
-    "mitigations" = "off"; # Edit if you have above 8th/9th gen.
+    "mitigations" = "off"; # Edit if you have Intel above 8th/9th gen.
   };
 
   # Edit kernel and boot parameters.
