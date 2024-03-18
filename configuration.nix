@@ -12,7 +12,7 @@
   
   # Override root filesystem config and edit options.
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/f61a5ecb-34ec-41c9-9ac2-13235d9a9a62"; # Edit uuid. You can find it by running blkid
+    { device = "/dev/disk/by-uuid/51c37128-dfb3-4439-ad9d-31f1bebfa62f";
       fsType = "ext4";
       options = [
          "noatime"
@@ -26,7 +26,7 @@
     "vm.dirty_background_ratio" = 5;
     "vm.vfs_cache_pressure" = 50;
     "kernel.core_pattern" = "/dev/null";
-    "mitigations" = "off"; # Edit if you have Intel above 8th/9th gen.
+    "mitigations" = "off";
   };
 
   # Edit kernel and boot parameters.
@@ -42,11 +42,9 @@
   zramSwap.enable = true;
 
   # Install Intel drivers.
-  # https://nixos.org/manual/nixos/stable/
-  hardware.opengl.extraPackages = with pkgs; [ # Edit according your CPU.
+  hardware.opengl.extraPackages = with pkgs; [
     intel-compute-runtime
     intel-media-driver
-    intel-ocl
   ];
   
   # Install Mesa and enable Vulkan.
@@ -56,13 +54,13 @@
   services.xserver = {
     enable = true;
     videoDrivers = [ "modesetting" ];
-    xkb.layout = "us";
+    xkb.layout = "it";
     desktopManager.plasma5.enable = true;
     displayManager.sddm.enable = true;
   };
 
   # Exclude packages from Plasma5.
-  environment.plasma5.excludePackages = with pkgs.libsForQt5; [ # Edit according your preferences.
+  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
     pkgs.aha
     plasma-browser-integration
     oxygen
@@ -131,12 +129,12 @@
   i18n.defaultLocale = "en_US.UTF-8";
     console = {
       font = "Lat2-Terminus16";
-      # keyMap = "us"; # Commented because is not unique. 
+      # keyMap = "it"; # Commented because is not unique. 
       useXkbConfig = true; # use xkb.options in tty.
   };
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  # services.printing.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput = {
@@ -145,9 +143,9 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.drinkwater = { # Edit user name.
+  users.users.zhenta = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user and add user to ‘networkmanager‘.
+    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
   #   packages = with pkgs; [
   #     firefox
   #     tree
@@ -156,7 +154,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ # Edit according your preferences.
+  environment.systemPackages = with pkgs; [
     wget
     brave
     temurin-bin-21
@@ -190,7 +188,7 @@
   # Open ports in the firewall or disable the firewall altogether.
   networking.firewall = {
     enable = true;
-    # allowedTCPPorts = [ ...  ];
+    allowedTCPPorts = [ 55252 ];
     # allowedUDPPorts = [ ...  ];
   };
 
