@@ -60,9 +60,6 @@
     displayManager.sddm.enable = true;
   };
 
-  # Install and enable xwayland
-  programs.xwayland.enable = true;
-
   # Exclude packages from Plasma5.
   environment.plasma5.excludePackages = with pkgs.libsForQt5; [ # Edit according your preferences.
     pkgs.aha
@@ -102,6 +99,12 @@
 
   # Install and enable git.
   programs.git.enable = true;
+
+  # Install and enable IRQBalance
+  services.irqbalance.enable = true;
+
+  # Install and enable xwayland
+  programs.xwayland.enable = true;
   
   # Unstable! Enable experimental features.
   # https://nixos.org/manual/nix/stable/contributing/experimental-features
@@ -119,9 +122,6 @@
     networkmanager.enable = true; # Easiest to use and most distros use this by default.
   };
   
-  # install and enable IRQBalance
-  services.irqbalance.enable = true;
-
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
