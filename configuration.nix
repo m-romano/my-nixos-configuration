@@ -60,6 +60,9 @@
     displayManager.sddm.enable = true;
   };
 
+  # Install and enable xwayland
+  programs.xwayland.enable = true;
+
   # Exclude packages from Plasma5.
   environment.plasma5.excludePackages = with pkgs.libsForQt5; [ # Edit according your preferences.
     pkgs.aha
