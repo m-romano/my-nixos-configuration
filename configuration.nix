@@ -49,6 +49,7 @@
   ];
   
   # Install Mesa and enable Vulkan.
+  # https://nixos.org/manual/nixos/stable/#sec-gpu-accel
   hardware.opengl.driSupport.enable = true;
 
   # Enable the X11 windowing system, Plasma5, SDDM and Video drivers.
