@@ -101,7 +101,7 @@
   # Install and enable git.
   programs.git.enable = true;
 
-  # Install and enable IRQBalance
+  # Install and enable IRQBalance.
   services.irqbalance.enable = true;
 
   # Install and enable xwayland
@@ -172,7 +172,6 @@
     python3
     scrcpy
     android-tools
-    steam-run
     lm_sensors
     calibre
   ];
