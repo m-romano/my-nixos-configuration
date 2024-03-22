@@ -6,7 +6,8 @@
 
 - **Hardware Scan**: The system automatically includes the results of the hardware scan through `./hardware-configuration.nix`.
 
-The configuration file `hardware-configuration.nix` is included from configuration.nix and will be overwritten by future invocations of nixos-generate-config; thus, you generally should not modify it.
+The configuration file `hardware-configuration.nix` is included from `configuration.nix` and will be overwritten by future invocations of nixos-generate-config; thus, you generally should not modify it.
+
 
 ### File System
 
@@ -14,11 +15,13 @@ The configuration file `hardware-configuration.nix` is included from configurati
 
 For more detailed information about the options, refer to the [Arch Linux Ext4 Wiki Page](https://wiki.archlinux.org/title/Ext4#Improving_performance).
 
+
 ### Virtual Memory
 
 - **Kernel Sysctl**: Adjustments are made to the virtual memory system, including setting `vm.dirty_ratio` to 10, `vm.dirty_background_ratio` to 5, and `vm.vfs_cache_pressure` to 50.
 
 For more detailed information about the options, refer to the [Arch Linux Sysctl Wiki Page](https://wiki.archlinux.org/title/Sysctl#Virtual_memory).
+
 
 ### Kernel and Boot Parameters
 
@@ -26,7 +29,9 @@ For more detailed information about the options, refer to the [Arch Linux Sysctl
 
 For more detailed information about watchdog, refer to the [Arch Linux Improve Performance Wiki Page](https://wiki.archlinux.org/title/improving_performance#Watchdogs).
 
+
 ### Software Configuration
+
 
 #### Package Management
 
@@ -34,11 +39,13 @@ For more detailed information about watchdog, refer to the [Arch Linux Improve P
 
 For more detailed information about allowUnfree module, refer to the [NixOS Manual](https://nixos.org/manual/nixpkgs/stable/#chap-packageconfig).
 
+
 #### ZRAM Swap
 
 - **Enable Swap**: ZRAM-based swap is enabled.
 
 For more detailed information about zramSwap module, refer to the [Search Options NixOS Page (Channel 23.11)](https://search.nixos.org/options?channel=23.11&from=0&size=50&sort=relevance&type=packages&query=zramSwap).
+
 
 #### Graphics Drivers
 
@@ -46,17 +53,20 @@ For more detailed information about zramSwap module, refer to the [Search Option
 
 For more detailed information about drivers, refer to the [NixOS Manual Page](https://nixos.org/manual/nixos/stable/#sec-x11).
 
+
 #### Desktop Environmet
 
 - **Plasma5 and X11**: The Plasma5 desktop environment alongside the X11 windowing system is enabled.
 
 For more detailed information about graphical profile, refer to the [NixOS Manual Page](https://nixos.org/manual/nixos/stable/#sec-profile-graphical).
 
+
 #### Audio
 
 - **Pipewire**: The Pipewire multimedia framework is enabled.
 
 For more detailed information about Pipewire module, refer to the [Search Options NixOS Page (Channel 23.11)](https://search.nixos.org/options?channel=23.11&from=0&size=50&sort=relevance&type=packages&query=services.pipewire).
+
 
 #### Development Tool
 
@@ -66,27 +76,33 @@ For more detailed information about Git module, refer to the [Search Options Nix
 
 If you use home manager, also refer to the [Home Manager Options Page](https://home-manager-options.extranix.com/?query=programs.git) for more (useful )options. 
 
+
 #### Text editor
 
 - **Neovim**: Neovim is installed and set as the default editor.
 
 For more detailed information about neovim module, refer to the [Search Options NixOS Page (Channel 23.11)](https://search.nixos.org/options?channel=23.11&from=0&size=50&sort=relevance&type=packages&query=neovim).
 
+
 ### Networking
 
 - **Systemd-boot and NetworkManager**: The systemd-boot EFI boot loader is used, and NetworkManager is enabled for easy network configuration.
+
 
 ### Users and Permissions
 
 - **User Creation**: A user named `drinkwater` is created with sudo privileges.
 
+
 ### System Services
 
 - **SSH and Firewall**: Secure remote access is configured through OpenSSH, and a basic firewall setup is enabled for security.
 
+
 ### Miscellaneous
 
 - **Fonts, Time Zone, and Locale**: A selection of fonts is installed, and system localization settings are configured for English (US) with a time zone set to Europe/Amsterdam.
+
 
 ## Customizing Your Configuration
 
@@ -98,6 +114,7 @@ This configuration serves as a foundation. You can edit various sections accordi
 - Tailor the user setup by changing the username and group memberships.
 
 Remember, after making changes to your `configuration.nix`, execute `nixos-rebuild switch` to apply them.
+
 
 ## Additional Resources
 
