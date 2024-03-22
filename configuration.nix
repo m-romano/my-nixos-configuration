@@ -12,7 +12,7 @@
   
   # Override root filesystem config and edit options.
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/82bac688-dcf6-491d-8c6d-5ccfefd5796e"; # Edit uuid, run blkid to find it.
+    { device = "/dev/disk/by-uuid/82bac688-dcf6-491d-8c6d-5ccfefd5796e"; # Edit the UUID by running `blkid` to find it.
       fsType = "ext4";
       options = [
          "noatime"
@@ -35,24 +35,22 @@
     "nowatchdog"
   ];
 
-  # Allow Unfree.
+  # Allow installation of packages with unfree licenses system-wide.
   nixpkgs.config.allowUnfree = true;
 
-  # Enable Swap.
+  # Enable Swap using ZRAM.
   zramSwap.enable = true;
 
-  # Install Intel drivers.
-  # https://nixos.org/manual/nixos/stable/#sec-x11
-  hardware.opengl.extraPackages = with pkgs; [ # Edit according your CPU
+  # Install Intel drivers based on your CPU model.
+  hardware.opengl.extraPackages = with pkgs; [
     intel-compute-runtime
     intel-media-driver
   ];
   
-  # Install Mesa and enable Vulkan.
-  # https://nixos.org/manual/nixos/stable/#sec-gpu-accel
+  # Enable DRI support for Mesa and Vulkan.
   hardware.opengl.driSupport.enable = true;
 
-  # Enable and install the X11 windowing system, Plasma5, SDDM and Video drivers.
+  # Enable and configure the X11 windowing system along with Plasma5, SDDM, and video drivers.
   services.xserver = {
     enable = true;
     videoDrivers = [ "modesetting" ];
@@ -85,10 +83,10 @@
     socketActivation = true;
   };
 
-  # Install and enable QT.
+  # Install and enable QT integration.
   qt.enable = true;
   
-  # Install fonts system-wide.
+  # Install a selection of system-wide fonts.
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-sans
@@ -108,7 +106,7 @@
   # Install and enable IRQBalance.
   services.irqbalance.enable = true;
 
-  # Install and enable xwayland
+  # Install and enable xwayland.
   programs.xwayland.enable = true;
   
   # Unstable! Enable experimental features.
