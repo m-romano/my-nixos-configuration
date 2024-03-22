@@ -52,13 +52,17 @@
   # https://nixos.org/manual/nixos/stable/#sec-gpu-accel
   hardware.opengl.driSupport.enable = true;
 
-  # Enable the X11 windowing system, Plasma5, SDDM and Video drivers.
+  # Enable and install the X11 windowing system, Plasma5, SDDM and Video drivers.
   services.xserver = {
     enable = true;
     videoDrivers = [ "modesetting" ];
     xkb.layout = "us";
     desktopManager.plasma5.enable = true;
     displayManager.sddm.enable = true;
+    libinput = {
+      enable = true;
+      touchpad.tapping = false;
+    };
   };
 
   # Exclude packages from Plasma5.
@@ -134,23 +138,17 @@
   i18n.defaultLocale = "en_US.UTF-8";
     console = {
       font = "Lat2-Terminus16";
-      # keyMap = "it"; # Commented because is not unique. 
+      # keyMap = "us"; # Commented because is not unique. 
       useXkbConfig = true; # use xkb.options in tty.
   };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput = {
-    enable = true;
-    touchpad.tapping = false;
-  };
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.drinkwater = { # Edit user name.
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user and add user to ‘networkmanager‘.
+    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user and add user to ‘networkmanager‘ group.
   #   packages = with pkgs; [
   #     firefox
   #     tree
