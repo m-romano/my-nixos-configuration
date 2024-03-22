@@ -6,7 +6,7 @@
 
 - **Hardware Scan**: The system automatically includes the results of the hardware scan through `./hardware-configuration.nix`.
 
-The configuration file hardware-configuration.nix is included from configuration.nix and will be overwritten by future invocations of nixos-generate-config; thus, you generally should not modify it.
+The configuration file `hardware-configuration.nix` is included from configuration.nix and will be overwritten by future invocations of nixos-generate-config; thus, you generally should not modify it.
 
 ### File System
 
@@ -18,7 +18,7 @@ For more detailed information about the options, refer to the [Arch Linux Ext4 W
 
 - **Kernel Sysctl**: Adjustments are made to the virtual memory system, including setting `vm.dirty_ratio` to 10, `vm.dirty_background_ratio` to 5, and `vm.vfs_cache_pressure` to 50.
 
-For more detailed information about the options, refer to the [Arch Linux Sysctl Wiki Page](ihttps://wiki.archlinux.org/title/Sysctl#Virtual_memory).
+For more detailed information about the options, refer to the [Arch Linux Sysctl Wiki Page](https://wiki.archlinux.org/title/Sysctl#Virtual_memory).
 
 ### Kernel and Boot Parameters
 
@@ -46,7 +46,7 @@ For more detailed information about zramSwap module, refer to the [Search Option
 
 For more detailed information about drivers, refer to the [NixOS Manual Page](https://nixos.org/manual/nixos/stable/#sec-x11).
 
-#### Desktop Environment
+#### Desktop Environmet
 
 - **Plasma5 and X11**: The Plasma5 desktop environment alongside the X11 windowing system is enabled.
 
