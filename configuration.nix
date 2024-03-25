@@ -84,6 +84,15 @@
 
   services.irqbalance.enable = true;
   
+  services.udev = {
+    enable = true;
+    extraRules = 
+      ''
+      # NVMe SSD
+      ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="none"
+      '';
+  };
+  
   programs.xwayland.enable = true;
   
   nix.settings = { 
@@ -99,7 +108,7 @@
     networkmanager.enable = true;
   };
   
-  time.timeZone = "Europe/Amsterdam";
+  time.timeZone = "Europe/Amesterdam";
 
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -111,14 +120,14 @@
       useXkbConfig = true;
   };
 
-  # services.printing.enable = true;
+   services.printing.enable = true;
 
   services.xserver.libinput = {
     enable = true;
     touchpad.tapping = false;
   };
 
-  users.users.drinkwater = {
+  users.users.zhenta = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
   #   packages = with pkgs; [
