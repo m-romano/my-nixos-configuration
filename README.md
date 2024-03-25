@@ -10,6 +10,7 @@ This guide outlines the steps and configurations needed to set up a NixOS system
     - [File System](#file-system)
     - [Virtual Memory](#virtual-memory)
     - [Kernel and Boot Parameters](#kernel-and-boot-parameters)
+    - [Kernel's I/O schedulers](#kernel's-i/o-schedulers)
   - [Software Configuration](#software-configuration)
     - [Package Management](#package-management)
     - [ZRAM Swap](#zram-swap)
@@ -52,6 +53,8 @@ For more detailed information about the options, refer to the [Arch Linux Sysctl
 
 For more detailed information about watchdog, refer to the [Arch Linux Improve Performance Wiki Page](https://wiki.archlinux.org/title/improving_performance#Watchdogs).
 
+### Kernel's I/O schedulers
+Detailed information about Kernel's schedulers, refer to the [Arch Linux Improve Performance Wiki Page](https://wiki.archlinux.org/title/improving_performance#Kernel's_I/O_schedulers) and change according your disk.
 
 ### Software Configuration
 
