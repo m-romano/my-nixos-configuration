@@ -8,7 +8,7 @@
     ];
   
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/51c37128-dfb3-4439-ad9d-31f1bebfa62f";
+    { device = "/dev/disk/by-uuid/da198889-2a70-4555-8ede-2f4954b12692";
       fsType = "ext4";
       options = [
          "noatime"
@@ -20,18 +20,47 @@
     "vm.dirty_ratio" = 10;
     "vm.dirty_background_ratio" = 5;
     "vm.vfs_cache_pressure" = 50;
-    "kernel.core_pattern" = "/dev/null";
+    "vm.swappiness" = 10;
+    "kernel.core_pattern"="|/bin/false";
     "mitigations" = "off";
+    "net.core.netdev_max_backlog" = 16384;
+    "net.ipv4.tcp_fastopen" = 3;
+    "net.ipv4.tcp_max_syn_backlog" = 8192;
+    "net.ipv4.tcp_max_tw_buckets" = 2000000;
+    "net.ipv4.tcp_tw_reuse" = 1;
+    "net.ipv4.tcp_fin_timeout" = 10;
+    "net.ipv4.tcp_slow_start_after_idle" = 0;
+    "net.ipv4.tcp_keepalive_time" = 60;
+    "net.ipv4.tcp_keepalive_intvl" = 10;
+    "net.ipv4.tcp_keepalive_probes" = 6;
+    "net.ipv4.tcp_mtu_probing" = 1;
+    "net.ipv4.tcp_timestamps" = 0;
+    "net.ipv4.tcp_sack" = 1;
+    "net.core.default_qdisc" = "cake";
+    "net.ipv4.tcp_congestion_control" = "bbr";
+    "net.ipv4.conf.default.rp_filter" = 1;
+    "net.ipv4.conf.all.rp_filter" = 1;
+    "net.ipv4.conf.all.accept_redirects" = 0;
+    "net.ipv4.conf.default.accept_redirects" = 0;
+    "net.ipv4.conf.all.secure_redirects" = 0;
+    "net.ipv4.conf.default.secure_redirects" = 0;
+    "net.ipv6.conf.all.accept_redirects" = 0;
+    "net.ipv6.conf.default.accept_redirects" = 0;
+    "net.ipv4.conf.all.send_redirects" = 0;
+    "net.ipv4.conf.default.send_redirects" = 0;
   };
 
   boot.kernelParams = [
     "modprobe.blacklist=iTCO_wdt"
     "nowatchdog"
+    "tcp_bbr"
   ];
 
   nixpkgs.config.allowUnfree = true;
 
   zramSwap.enable = true;
+
+  services.fstrim.enable = true;
 
   hardware.opengl.extraPackages = with pkgs; [
     intel-compute-runtime
@@ -90,6 +119,9 @@
       ''
       # NVMe SSD
       ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="none"
+
+      # Set device MTU and queue length
+      ACTION=="add", SUBSYSTEM=="net", KERNEL=="wl*", ATTR{mtu}="1500", ATTR{tx_queue_len}="2000"
       '';
   };
   
@@ -110,9 +142,6 @@
   
   time.timeZone = "Europe/Amsterdam";
 
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   i18n.defaultLocale = "en_US.UTF-8";
     console = {
       font = "Lat2-Terminus16";
@@ -120,20 +149,14 @@
       useXkbConfig = true;
   };
 
-   services.printing.enable = true;
-
   services.xserver.libinput = {
     enable = true;
     touchpad.tapping = false;
   };
 
-  users.users.zhenta = {
+  users.users.DrinkWater = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
-  #   packages = with pkgs; [
-  #     firefox
-  #     tree
-  #   ];
   };
 
   environment.systemPackages = with pkgs; [
@@ -159,12 +182,9 @@
     enableSSHSupport = true;
   };
 
-  # services.openssh.enable = true;
-
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ 55252 ];
-    # allowedUDPPorts = [ ...  ];
   };
 
   system.stateVersion = "23.11";
