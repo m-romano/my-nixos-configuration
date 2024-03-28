@@ -2,13 +2,19 @@
 { config, lib, pkgs, ... }:
 
 {
+  # Hardware
   imports =
     [
       ./hardware-configuration.nix
     ];
+
+  # Boot
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
   
+  # System
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/da198889-2a70-4555-8ede-2f4954b12692";
+    { device = "/dev/disk/by-uuid/84102867-eaa4-41dd-9cd4-a4d8c88b810c";
       fsType = "ext4";
       options = [
          "noatime"
@@ -56,11 +62,17 @@
     "tcp_bbr"
   ];
 
-  nixpkgs.config.allowUnfree = true;
+  services.udev = {
+    enable = true;
+    extraRules = 
+      ''
+      # NVMe SSD
+      ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="none"
 
-  zramSwap.enable = true;
-
-  services.fstrim.enable = true;
+      # Set device MTU and queue length
+      ACTION=="add", SUBSYSTEM=="net", KERNEL=="wl*", ATTR{mtu}="1500", ATTR{tx_queue_len}="2000"
+      '';
+  };
 
   hardware.opengl.extraPackages = with pkgs; [
     intel-compute-runtime
@@ -69,6 +81,22 @@
   
   hardware.opengl.driSupport.enable = true;
 
+  zramSwap.enable = true;
+
+  services.fstrim.enable = true;
+
+  services.irqbalance.enable = true;
+
+  # Nix
+  nix.settings = { 
+    experimental-features = "nix-command flakes";
+    auto-optimise-store = true;
+  };
+
+  # Nixpkgs
+  nixpkgs.config.allowUnfree = true;
+
+  # Graphical
   services.xserver = {
     enable = true;
     videoDrivers = [ "modesetting" ];
@@ -95,15 +123,18 @@
     socketActivation = true;
   };
 
-  qt.enable = true;
-  
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-color-emoji
     jetbrains-mono
   ];
+
+  qt.enable = true;
+
+  programs.xwayland.enable = true;
   
+  # Programs
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -111,54 +142,45 @@
 
   programs.git.enable = true;
 
-  services.irqbalance.enable = true;
-  
-  services.udev = {
+  programs.mtr.enable = true;
+  programs.gnupg.agent = {
     enable = true;
-    extraRules = 
-      ''
-      # NVMe SSD
-      ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="none"
-
-      # Set device MTU and queue length
-      ACTION=="add", SUBSYSTEM=="net", KERNEL=="wl*", ATTR{mtu}="1500", ATTR{tx_queue_len}="2000"
-      '';
+    enableSSHSupport = true;
   };
   
-  programs.xwayland.enable = true;
-  
-  nix.settings = { 
-    experimental-features = "nix-command flakes";
-    auto-optimise-store = true;
-  };
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  
+  # Networking
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
   };
-  
-  time.timeZone = "Europe/Amsterdam";
 
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 55252 ];
+  };
+
+  time.timeZone = "Europe/Amsterdam";
+  
+  # Input
   i18n.defaultLocale = "en_US.UTF-8";
     console = {
       font = "Lat2-Terminus16";
       # keyMap = "us"; 
       useXkbConfig = true;
   };
-
+  
   services.xserver.libinput = {
     enable = true;
     touchpad.tapping = false;
   };
-
-  users.users.DrinkWater = {
+  
+  # User
+  users.users.zhenta = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
   };
-
+  
+  # System packages
   environment.systemPackages = with pkgs; [
     wget
     brave
@@ -176,17 +198,7 @@
     calibre
   ];
 
-  programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [ 55252 ];
-  };
-
+  # State Version
   system.stateVersion = "23.11";
 
 }
