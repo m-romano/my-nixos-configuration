@@ -10,7 +10,7 @@ This guide outlines the steps and configurations needed to set up a NixOS system
     - [File System](#file-system)
     - [Virtual Memory](#virtual-memory)
     - [Kernel and Boot Parameters](#kernel-and-boot-parameters)
-    - [Kernel's I/O schedulers](#kernel's-i/o-schedulers)
+    - [Kernels schedulers](#kernels-schedulers)
   - [Software Configuration](#software-configuration)
     - [Package Management](#package-management)
     - [ZRAM Swap](#zram-swap)
