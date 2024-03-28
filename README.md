@@ -53,7 +53,7 @@ For more detailed information about the options, refer to the [Arch Linux Sysctl
 
 For more detailed information about watchdog, refer to the [Arch Linux Improve Performance Wiki Page](https://wiki.archlinux.org/title/improving_performance#Watchdogs).
 
-### Kernel's I/O schedulers
+### Kernels schedulers
 Detailed information about Kernel's schedulers, refer to the [Arch Linux Improve Performance Wiki Page](https://wiki.archlinux.org/title/improving_performance#Kernel's_I/O_schedulers) and change according your disk.
 
 ### Software Configuration
