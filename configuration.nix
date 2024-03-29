@@ -14,7 +14,7 @@
   
   # System
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/84102867-eaa4-41dd-9cd4-a4d8c88b810c";
+    { device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
       options = [
          "noatime"
