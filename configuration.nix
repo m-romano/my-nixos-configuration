@@ -130,7 +130,12 @@
     jetbrains-mono
   ];
 
-  qt.enable = true;
+  qt = {
+    enable = true;
+    style = "breeze";
+    platformTheme = "kde";
+  };
+
 
   programs.xwayland.enable = true;
   
