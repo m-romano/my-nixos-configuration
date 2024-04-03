@@ -156,10 +156,14 @@
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 55252 ];
+    # allowedTCPPorts = [ ... ];
+    # allowedUDPPorts = [ ... ]:
   };
 
   time.timeZone = "Europe/Amsterdam";
+
+  services.openssh.enable = true;
+
   
   # Input
   i18n.defaultLocale = "en_US.UTF-8";
@@ -195,7 +199,6 @@
     scrcpy
     android-tools
     lm_sensors
-    calibre
   ];
 
   # State Version
