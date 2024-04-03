@@ -163,7 +163,6 @@
   time.timeZone = "Europe/Amsterdam";
 
   services.openssh.enable = true;
-
   
   # Input
   i18n.defaultLocale = "en_US.UTF-8";
