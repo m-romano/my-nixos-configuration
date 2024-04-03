@@ -5,6 +5,7 @@ This guide outlines the steps and configurations needed to set up a NixOS system
 # Table of Contents
 
 - [NixOS Configuration Guide](#nixos-configuration-guide)
+  - [Showcase](#showcase)
   - [System Configuration](#system-configuration)
     - [Hardware Configuration](#hardware-configuration)
     - [File System](#file-system)
@@ -23,6 +24,13 @@ This guide outlines the steps and configurations needed to set up a NixOS system
   - [Users and Permissions](#users-and-permissions)
   - [System Services](#system-services)
   - [Miscellaneous](#miscellaneous)
+
+## Showcase
+![home](./pictures/home.png)
+![browsing](./pictures/browsing.png)
+![mpv](./pictures/mpv.png)
+
+Wallpaper offered by [Crowned](https://www.deadtopic.com/need-for-speed).
 
 ## System Configuration
 
