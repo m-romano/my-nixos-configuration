@@ -136,7 +136,6 @@
     platformTheme = "kde";
   };
 
-
   programs.xwayland.enable = true;
   
   # Programs
