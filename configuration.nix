@@ -95,6 +95,9 @@
 
   # Nixpkgs
   nixpkgs.config.allowUnfree = true;
+  
+  # Environment variables
+  environment.variables.EDITOR = "nvim";
 
   # Graphical
   services.xserver = {
