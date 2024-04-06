@@ -166,7 +166,16 @@
 
   time.timeZone = "Europe/Amsterdam";
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings = {
+      X11Forwarding = true;
+      PermitRootLogin = "no";
+      PasswordAuthentication = false;
+    };
+    openFirewall = true;
+  };
+
   
   # Input
   i18n.defaultLocale = "en_US.UTF-8";
@@ -185,6 +194,9 @@
   users.users.zhenta = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
+    openssh.authorizedKeys.keys = [
+        "ssh-ed25519 <some-public-key> drink@water"
+    ];
   };
   
   # System packages
@@ -192,7 +204,7 @@
     wget
     brave
     temurin-bin-21
-    mpv-unwrapped
+    mpv
     vscode
     keepassxc
     p7zip
@@ -202,6 +214,7 @@
     scrcpy
     android-tools
     lm_sensors
+    curl
   ];
 
   # State Version
