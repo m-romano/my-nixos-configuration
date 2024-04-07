@@ -49,7 +49,7 @@ The configuration file `hardware-configuration.nix` is included from `configurat
 
 ### File System
 
-- **Root Filesystem**: Configured to use the ext4 filesystem on the device identified by partition label `nixos`. The options `noatime` and `commit=60`.
+- **Root Filesystem**: Configured to use the ext4 filesystem on the device identified by uuid. The options `noatime` and `commit=60`.
 
 For more detailed information about the options, refer to the [Arch Linux Ext4 Wiki Page](https://wiki.archlinux.org/title/Ext4#Improving_performance).
 
