@@ -6,6 +6,7 @@ This guide outlines the steps and configurations needed to set up a NixOS system
 
 - [NixOS Configuration Guide](#nixos-configuration-guide)
   - [Showcase](#showcase)
+  - [flake](#flake-nix)
   - [System Configuration](#system-configuration)
     - [Hardware Configuration](#hardware-configuration)
     - [File System](#file-system)
@@ -26,11 +27,16 @@ This guide outlines the steps and configurations needed to set up a NixOS system
   - [Miscellaneous](#miscellaneous)
 
 ## Showcase
-![home](./pictures/home.png)
-![browsing](./pictures/browsing.png)
+![home](./pictures/homescreen.png)
+![browsing](./pictures/spotify.png)
 ![mpv](./pictures/mpv.png)
+![code](./pictures/code.png)
 
-Wallpaper offered by [Crowned](https://www.deadtopic.com/need-for-speed).
+Wallpaper offered [by Crowned](https://www.deadtopic.com/need-for-speed).
+
+## flake-nix
+- **flake.nix**: configuration.nix is wrapped inside this flake. Enable unstable packages and home manager.
+- **home.nix**: Manage dotfiles.
 
 ## System Configuration
 
