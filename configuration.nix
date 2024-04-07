@@ -186,7 +186,7 @@
   users.users.drinkwater = {
    isNormalUser = true;
    description = "drinkwater";
-   home = "/home/zhenta";
+   home = "/home/drinkwater";
    extraGroups = [ "wheel" "networkmanager" "kvm" "adbusers" ]; # Enable ‘sudo’ for the user.
    openssh.authorizedKeys.keys = [
      "ssh-ed25519 <some-public-key> drink@water.com"

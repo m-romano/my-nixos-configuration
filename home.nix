@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  home.username = "zhenta";
-  home.homeDirectory = "/home/zhenta";
+  home.username = "drinkwater";
+  home.homeDirectory = "/home/drinkwater";
   
   # Execute script.
   # home.file.".config/scripts" = {
