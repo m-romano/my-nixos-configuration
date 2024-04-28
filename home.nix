@@ -25,7 +25,26 @@
     keepassxc
     jetbrains.idea-ultimate
     transmission_4
+    neofetch
+    postman
+    google-chrome
   ];
+
+# Bash - unix shell.
+  programs.bash = {
+    enable = true;
+    enableCompletion = true;
+    bashrcExtra = ''
+      export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.npm-global/bin"
+      export JAVA_HOME=/nix/store/6m2wff2lm5pk892389ivgcbs1nqbsz6v-temurin-bin-21.0.1/
+    '';
+
+    # shellAliases = {
+    #   k = "kubectl";
+    #   urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
+    #   urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
+    # };
+  };
 
   # Basic configuration of git.
   programs.git = {
@@ -54,29 +73,6 @@
     };
   };
 
-  # foot - A fast, lightweight and minimalistic Wayland terminal emulator
-  programs.foot = {
-    enable = true;
-    # custom settings
-    settings = {
-      main = {
-        term = "xterm-256color";
-
-	      font = "JetBrainsMono Nerd Font Mono:size=11";
-
-	      initial-window-size-pixels="1024x768";
-      };
-      mouse = {
-        hide-when-typing = "yes";
-      };
-      colors = {
-        alpha="0.8";
-        background="242424";
-	      foreground="ffffff";
-      };
-    };
-  };
-  
   # Neovim - Vim-fork focused on extensibility and usability.
   programs.neovim = {
     enable = true;
@@ -108,21 +104,6 @@
     defaultProfiles = ["high-quality"];
   };
   
-  # Bash - unix shell.
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-    bashrcExtra = ''
-      export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
-    '';
-
-    # shellAliases = {
-    #   k = "kubectl";
-    #   urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
-    #   urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
-    # };
-  };
-
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new home Manager release introduces backwards
