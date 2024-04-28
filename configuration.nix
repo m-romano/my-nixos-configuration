@@ -20,7 +20,7 @@
       fsType = "ext4";
       options = [
          "noatime"
-	       "commit=60"
+	 "commit=60"
       ];
     };
   
@@ -78,6 +78,73 @@
       ACTION=="add", SUBSYSTEM=="net", KERNEL=="wl*", ATTR{mtu}="1500", ATTR{tx_queue_len}="2000"
       '';
   };
+
+  # Enable postgresql
+  services.postgresql.enable = true;
+  services.postgresql.settings = {
+    # Memory Configuration
+    shared_buffers = "2GB";
+    effective_cache_size = "6GB";
+    work_mem = "20MB";
+    maintenance_work_mem = "410MB";
+
+    # Checkpoint Related Configuration
+    min_wal_size = "2GB";
+    max_wal_size = "3GB";
+    checkpoint_completion_target = 0.9;
+    wal_buffers = -1;
+
+    # Network Related Configuration
+    listen_addresses = lib.mkForce "*";
+    max_connections = 100;
+
+    # Storage Configuration
+    random_page_cost = 1.1;
+    effective_io_concurrency = 200;
+
+    # Worker Processes Configuration
+    max_worker_processes = 8;
+    max_parallel_workers_per_gather = 2;
+    max_parallel_workers = 2;
+
+    # Logging configuration for pgbadger
+    logging_collector = "on";
+    log_checkpoints = "on";
+    log_connections = "on";
+    log_disconnections = "on";
+    log_lock_waits = "on";
+    log_temp_files = "0";
+    lc_messages = "C";
+
+    # Adjust the minimum time to collect the data
+    log_min_duration_statement = "10s";
+    log_autovacuum_min_duration = 0;
+
+    # CSV Configuration
+    log_destination = lib.mkForce "csvlog";
+  };
+  services.postgresql.authentication = lib.mkForce 
+    ''
+    # Generated file; do not edit!
+    # TYPE  DATABASE        USER            ADDRESS                 METHOD
+    local   all             all                                     trust
+    host    all             all             127.0.0.1/32            trust
+    host    all             all             ::1/128                 trust
+    '';
+
+  # Enable docker
+  virtualisation.docker.enable = true;
+  virtualisation.docker.extraPackages = with pkgs; [
+    docker-compose
+  ];
+  
+  # Enable virtualisation and virt-manager
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
+
+  # Enable Java
+  programs.java.enable = true;
   
   # Install intel driver packages.
   hardware.opengl.extraPackages = with pkgs; [
@@ -110,6 +177,10 @@
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  
+  # Randomize Mac Address.
+  networking.networkmanager.wifi.scanRandMacAddress = true;
+  networking.networkmanager.wifi.macAddress = "random";
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
@@ -138,7 +209,6 @@
   environment.plasma5.excludePackages = with pkgs.libsForQt5; [
     pkgs.aha
     plasma-browser-integration
-    konsole
     oxygen
     (lib.getBin qttools)
   ];
@@ -185,11 +255,11 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.drinkwater = {
    isNormalUser = true;
-   description = "drinkwater";
+   description = "Drink water";
    home = "/home/drinkwater";
-   extraGroups = [ "wheel" "networkmanager" "kvm" "adbusers" ]; # Enable ‘sudo’ for the user.
+   extraGroups = [ "wheel" "networkmanager" "kvm" "adbusers" "docker" "libvirtd" ]; # Enable ‘sudo’ for the user.
    openssh.authorizedKeys.keys = [
-     "ssh-ed25519 <some-public-key> drink@water.com"
+     "ssh-ed25519 <some_keys> drink@water.com"
    ];
   #   packages = with pkgs; [
   #     firefox
@@ -219,7 +289,7 @@
    p7zip
    python3
    temurin-bin-21
-   scrcpy
+   nodejs_21
   ];
 
   environment.variables.EDITOR = "neovim";
