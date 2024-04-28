@@ -1,146 +1,135 @@
-# NixOS Configuration Guide
+# NixOS Configuration Repository
 
-This guide outlines the steps and configurations needed to set up a NixOS system. It covers hardware, filesystem, virtual memory, kernel, software configurations, networking, user management, system services, and miscellaneous settings.
+Welcome to the NixOS Configuration Repository! This repository contains a comprehensive configuration setup for a personalized NixOS system, covering various aspects of system setup, optimization, and customization.
 
-# Table of Contents
+## Table of Contents
 
-- [NixOS Configuration Guide](#nixos-configuration-guide)
-  - [Showcase](#showcase)
-  - [flake](#flake-nix)
-  - [System Configuration](#system-configuration)
-    - [Hardware Configuration](#hardware-configuration)
-    - [File System](#file-system)
-    - [Virtual Memory](#virtual-memory)
-    - [Kernel and Boot Parameters](#kernel-and-boot-parameters)
-    - [Kernels schedulers](#kernels-schedulers)
-  - [Software Configuration](#software-configuration)
-    - [Package Management](#package-management)
-    - [ZRAM Swap](#zram-swap)
-    - [Graphics Drivers](#graphics-drivers)
-    - [Desktop Environment](#desktop-environmet)
-    - [Audio](#audio)
-    - [Development Tool](#development-tool)
-    - [Text editor](#text-editor)
-  - [Networking](#networking)
-  - [Users and Permissions](#users-and-permissions)
-  - [System Services](#system-services)
-  - [Miscellaneous](#miscellaneous)
+- [System Overview](#system-overview)
+- [Configuration Details](#configuration-details)
+  - [Bootloader Configuration](#bootloader-configuration)
+  - [Filesystem Configuration](#filesystem-configuration)
+  - [Virtual Memory Tuning](#virtual-memory-tuning)
+  - [Kernel Parameter Customization](#kernel-parameter-customization)
+  - [Udev Rules](#udev-rules)
+  - [PostgreSQL Database Setup](#postgresql-database-setup)
+  - [Docker and Virtualization Support](#docker-and-virtualization-support)
+  - [Java Installation and Configuration](#java-installation-and-configuration)
+  - [OpenGL Driver Configuration](#opengl-driver-configuration)
+  - [ZRAM and Fstrim Setup](#zram-and-fstrim-setup)
+  - [IRQ Balancing](#irq-balancing)
+  - [Nix Package Manager Settings](#nix-package-manager-settings)
+  - [Internationalization Properties](#internationalization-properties)
+  - [X11 and Plasma 5 Desktop Environment Setup](#x11-and-plasma-5-desktop-environment-setup)
+  - [Font Packages Configuration](#font-packages-configuration)
+  - [Touchpad Support Configuration](#touchpad-support-configuration)
+  - [User Account Setup](#user-account-setup)
+  - [Installed System Packages and Default Editor Configuration](#installed-system-packages-and-default-editor-configuration)
+  - [Additional Programs and Services Enablement](#additional-programs-and-services-enablement)
+  - [Flake Configuration](#flake-configuration)
+  - [Home Manager Configuration](#home-manager-configuration)
+  - [Note](#note)
+- [License](#license)
 
-## Showcase
-![home](./pictures/homescreen.png)
-![browsing](./pictures/spotify.png)
-![mpv](./pictures/mpv.png)
-![code](./pictures/code.png)
+## System Overview
 
-Wallpaper offered [by Crowned](https://www.deadtopic.com/need-for-speed).
+The NixOS configuration covers various aspects of system setup and customization:
 
-## flake-nix
-- **flake.nix**: configuration.nix is wrapped inside this flake. Enable unstable packages and home manager.
-- **home.nix**: Manage dotfiles.
+### Bootloader Configuration
 
-## System Configuration
+Optimized bootloader setup with systemd-boot EFI boot loader.
 
-### Hardware Configuration
+### Filesystem Configuration
 
-- **Hardware Scan**: The system automatically includes the results of the hardware scan through `./hardware-configuration.nix`.
+Filesystem configuration for improved performance and reliability.
 
-The configuration file `hardware-configuration.nix` is included from `configuration.nix` and will be overwritten by future invocations of nixos-generate-config; thus, you generally should not modify it.
+### Virtual Memory Tuning
 
+Virtual memory tuning to optimize system responsiveness.
 
-### File System
+### Kernel Parameter Customization
 
-- **Root Filesystem**: Configured to use the ext4 filesystem on the device identified by uuid. The options `noatime` and `commit=60`.
+Custom kernel parameters for fine-tuning system behavior.
 
-For more detailed information about the options, refer to the [Arch Linux Ext4 Wiki Page](https://wiki.archlinux.org/title/Ext4#Improving_performance).
+### Udev Rules
 
+Udev rules for device management and customization.
 
-### Virtual Memory
+### PostgreSQL Database Setup
 
-- **Kernel Sysctl**: Adjustments are made to the virtual memory system, including setting `vm.dirty_ratio` to 10, `vm.dirty_background_ratio` to 5, and `vm.vfs_cache_pressure` to 50.
+PostgreSQL database setup with optimized memory and storage configurations.
 
-For more detailed information about the options, refer to the [Arch Linux Sysctl Wiki Page](https://wiki.archlinux.org/title/Sysctl#Virtual_memory).
+### Docker and Virtualization Support
 
+Docker and virtualization support for containerized applications.
 
-### Kernel and Boot Parameters
+### Java Installation and Configuration
 
-- **Kernel Params**: Specific modules are blacklisted, and the watchdog timer is disabled.
+Java installation and configuration for Java-based applications.
 
-For more detailed information about watchdog, refer to the [Arch Linux Improve Performance Wiki Page](https://wiki.archlinux.org/title/improving_performance#Watchdogs).
+### OpenGL Driver Configuration
 
-### Kernels schedulers
-Detailed information about Kernel's schedulers, refer to the [Arch Linux Improve Performance Wiki Page](https://wiki.archlinux.org/title/improving_performance#Kernel's_I/O_schedulers) and change according your disk.
+OpenGL driver configuration for graphics acceleration.
 
-### Software Configuration
+### ZRAM and Fstrim Setup
 
+ZRAM and Fstrim setup for efficient memory and storage usage.
 
-#### Package Management
+### IRQ Balancing
 
-- **Allow Unfree**: Unfree packages are permitted system-wide.
+IRQ balancing for improved system performance.
 
-For more detailed information about allowUnfree module, refer to the [NixOS Manual](https://nixos.org/manual/nixpkgs/stable/#chap-packageconfig).
+### Nix Package Manager Settings
 
+Nix package manager settings for package management and reproducible builds.
 
-#### ZRAM Swap
+### Internationalization Properties
 
-- **Enable Swap**: ZRAM-based swap is enabled.
+Internationalization properties for language and locale settings.
 
-For more detailed information about zramSwap module, refer to the [Search Options NixOS Page (Channel 23.11)](https://search.nixos.org/options?channel=23.11&from=0&size=50&sort=relevance&type=packages&query=zramSwap).
+### X11 and Plasma 5 Desktop Environment Setup
 
+X11 windowing system and Plasma 5 Desktop Environment setup for graphical user interface.
 
-#### Graphics Drivers
+### Font Packages Configuration
 
-- **Intel Drivers**: If you're using an Intel CPU, essential drivers are installed.
+Font packages configuration for font rendering customization.
 
-For more detailed information about drivers, refer to the [NixOS Manual Page](https://nixos.org/manual/nixos/stable/#sec-x11).
+### Touchpad Support Configuration
 
+Touchpad support configuration for touchpad functionality.
 
-#### Desktop Environmet
+### User Account Setup
 
-- **Plasma5 and X11**: The Plasma5 desktop environment alongside the X11 windowing system is enabled.
+User account setup with Home Manager for personalized user environments.
 
-For more detailed information about graphical profile, refer to the [NixOS Manual Page](https://nixos.org/manual/nixos/stable/#sec-profile-graphical).
+### Installed System Packages and Default Editor Configuration
 
+Installed system packages and default editor configuration.
 
-#### Audio
+### Additional Programs and Services Enablement
 
-- **Pipewire**: The Pipewire multimedia framework is enabled.
+Additional programs and services enablement as needed.
 
-For more detailed information about Pipewire module, refer to the [Search Options NixOS Page (Channel 23.11)](https://search.nixos.org/options?channel=23.11&from=0&size=50&sort=relevance&type=packages&query=services.pipewire).
+### Flake Configuration
 
+The Flake configuration (`flake.nix`) provides a reproducible and declarative way to manage NixOS configurations and home environment with Home Manager.
 
-#### Development Tool
+### Home Manager Configuration
 
-- **Git**: Version control.
+User-specific settings and package installations are managed through Home Manager. The `home.nix` file defines the configuration for the user account.
 
-For more detailed information about Git module, refer to the [Search Options NixOS Page (Channel 23.11)](https://search.nixos.org/options?channel=23.11&from=0&size=50&sort=relevance&type=packages&query=programs.git).
+## Configuration Details
 
-If you use home manager, also refer to the [Home Manager Options Page](https://home-manager-options.extranix.com/?query=programs.git) for more (useful) options. 
+To apply this configuration to your NixOS system:
+1. Go through the partition suff.
+1. Copy the contents of `configuration.nix` into your NixOS configuration file (`/etc/nixos/configuration.nix`).
+2. Modify the configuration as needed to match your system requirements.
+3. Apply the changes by running `sudo nixos-rebuild switch`.
+4. Reboot your system for the changes to take effect.
 
+Ensure understanding of the implications of each configuration option before applying them to your system. Incorrect configurations may lead to system instability or undesired behavior.
 
-#### Text editor
+## License
 
-- **Neovim**: Neovim is installed and set as the default editor.
-
-For more detailed information about neovim module, refer to the [Search Options NixOS Page (Channel 23.11)](https://search.nixos.org/options?channel=23.11&from=0&size=50&sort=relevance&type=packages&query=neovim).
-
-
-### Networking
-
-- **Systemd-boot and NetworkManager**: The systemd-boot EFI boot loader is used, and NetworkManager is enabled for easy network configuration.
-
-
-### Users and Permissions
-
-- **User Creation**: A user named `drinkwater` is created with sudo privileges.
-
-
-### System Services
-
-- **SSH and Firewall**: Secure remote access is configured through OpenSSH, and a basic firewall setup is enabled for security.
-
-
-### Miscellaneous
-
-- **Fonts, Time Zone, and Locale**: A selection of fonts is installed, and system localization settings are configured for English (US) with a time zone set to Europe/Amsterdam.
-
+This repository is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
